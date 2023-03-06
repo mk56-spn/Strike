@@ -17,10 +17,10 @@ namespace osu.Game.Rulesets.Strike
 
     public enum StrikeAction
     {
-        [Description("Button 1")]
+        [Description("left")]
         Button1,
 
-        [Description("Button 2")]
+        [Description("right")]
         Button2,
     }
 }
