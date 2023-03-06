@@ -50,8 +50,8 @@ namespace osu.Game.Rulesets.Strike
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
-            new KeyBinding(InputKey.Z, StrikeAction.Button1),
-            new KeyBinding(InputKey.X, StrikeAction.Button2),
+            new KeyBinding(InputKey.Left, StrikeAction.Button1),
+            new KeyBinding(InputKey.Right, StrikeAction.Button2),
         };
 
         public override Drawable CreateIcon() => new Icon(ShortName[0]);
