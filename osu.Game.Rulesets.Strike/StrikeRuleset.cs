@@ -46,12 +46,14 @@ namespace osu.Game.Rulesets.Strike
             }
         }
 
-        public override string ShortName => "strikeruleset";
+        public override string ShortName => "strike ruleset";
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
-            new KeyBinding(InputKey.Left, StrikeAction.Button1),
-            new KeyBinding(InputKey.Right, StrikeAction.Button2),
+            new KeyBinding(InputKey.A, StrikeAction.Button1),
+            new KeyBinding(InputKey.D, StrikeAction.Button2),
+            new KeyBinding(InputKey.W, StrikeAction.Button3),
+            new KeyBinding(InputKey.S, StrikeAction.Button4),
         };
 
         public override Drawable CreateIcon() => new Icon(ShortName[0]);
