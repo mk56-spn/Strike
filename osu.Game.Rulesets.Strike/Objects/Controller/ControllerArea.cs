@@ -1,13 +1,10 @@
 using System;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Framework.Utils;
-using osu.Game.Graphics;
-using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Strike.UI;
 using osuTK;
 
@@ -15,36 +12,21 @@ namespace osu.Game.Rulesets.Strike.Objects.Controller;
 
 public partial class ControllerArea : Container, IKeyBindingHandler<StrikeAction>
 {
-    [Resolved]
-    private StrikePlayfield playfield { get; set; } = null!;
-
     private readonly ControllerContainer controllerContainer;
 
-    private readonly OsuSpriteText testTextHorizontal;
-    private readonly OsuSpriteText testTextVertical;
-
-    private int horizontalCheck;
-    private int verticalCheck;
+    public int HorizontalCheck;
+    public int VerticalCheck;
 
     public ControllerArea()
     {
+        Anchor = Anchor.Centre;
+        Origin = Anchor.Centre;
+        Size = new Vector2(StrikePlayfield.SIZE);
+
         AddRange(new Drawable[]
         {
             controllerContainer = new ControllerContainer(),
-            testTextHorizontal = new OsuSpriteText
-            {
-                Font = OsuFont.Numeric.With(size: 20),
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Y = -130,
-            },
-            testTextVertical = new OsuSpriteText
-            {
-                Font = OsuFont.Numeric.With(size: 20),
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Y = -150
-            },
+
             new Container
             {
                 Colour = Colour4.White,
@@ -69,19 +51,19 @@ public partial class ControllerArea : Container, IKeyBindingHandler<StrikeAction
         switch (e.Action)
         {
             case StrikeAction.Button1:
-                horizontalCheck--;
+                HorizontalCheck--;
                 break;
 
             case StrikeAction.Button2:
-                horizontalCheck++;
+                HorizontalCheck++;
                 break;
 
             case StrikeAction.Button3:
-                verticalCheck--;
+                VerticalCheck--;
                 break;
 
             case StrikeAction.Button4:
-                verticalCheck++;
+                VerticalCheck++;
                 break;
         }
 
@@ -93,11 +75,11 @@ public partial class ControllerArea : Container, IKeyBindingHandler<StrikeAction
         switch (e.Action)
         {
             case StrikeAction.Button1 or StrikeAction.Button2:
-                horizontalCheck = e.Action == StrikeAction.Button1 ? horizontalCheck + 1 : horizontalCheck - 1;
+                HorizontalCheck = e.Action == StrikeAction.Button1 ? HorizontalCheck + 1 : HorizontalCheck - 1;
                 break;
 
             case StrikeAction.Button3 or StrikeAction.Button4:
-                verticalCheck = e.Action == StrikeAction.Button3 ? verticalCheck + 1 : verticalCheck - 1;
+                VerticalCheck = e.Action == StrikeAction.Button3 ? VerticalCheck + 1 : VerticalCheck - 1;
                 break;
         }
     }
@@ -109,14 +91,14 @@ public partial class ControllerArea : Container, IKeyBindingHandler<StrikeAction
 
         const int speed = 1000;
 
-        xSpeed = horizontalCheck switch
+        xSpeed = HorizontalCheck switch
         {
             -1 => -speed,
             1 => speed,
             _ => xSpeed
         };
 
-        ySpeed = verticalCheck switch
+        ySpeed = VerticalCheck switch
         {
             -1 => -speed,
             1 => speed,
@@ -125,15 +107,12 @@ public partial class ControllerArea : Container, IKeyBindingHandler<StrikeAction
 
         var newPos = controllerContainer.Position + new Vector2(xSpeed, ySpeed) * new Vector2((float)(Clock.ElapsedFrameTime / 1000f));
 
-        if (horizontalCheck == 0)
+        if (HorizontalCheck == 0)
         {
             newPos.X = controllerContainer.Position.X;
         }
 
         controllerContainer.MoveTo(newPos);
-
-        testTextHorizontal.Text = $"Horizontal: {horizontalCheck}";
-        testTextVertical.Text = $"Vertical: {verticalCheck}";
 
         clampToPlayfield();
         moveViewPort();
