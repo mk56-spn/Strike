@@ -22,5 +22,11 @@ namespace osu.Game.Rulesets.Strike
 
         [Description("right")]
         Button2,
+
+        [Description("up")]
+        Button3,
+
+        [Description("down")]
+        Button4
     }
 }
