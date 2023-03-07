@@ -1,0 +1,3 @@
+# Strike
+
+prototype ruleset lol
