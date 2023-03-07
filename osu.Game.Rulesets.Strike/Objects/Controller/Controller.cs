@@ -11,10 +11,12 @@ public partial class ControllerContainer : Container
 
     public ControllerContainer()
     {
+        CornerRadius = 20;
         Masking = true;
         Anchor = Anchor.Centre;
+        Origin = Anchor.Centre;
 
-        Add(new Circle
+        Add(new Box
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
